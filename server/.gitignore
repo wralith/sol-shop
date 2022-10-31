@@ -1,0 +1,4 @@
+# ignore generated code by ent
+ent/*
+# except schemas
+!ent/schema
