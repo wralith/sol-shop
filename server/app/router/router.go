@@ -29,6 +29,7 @@ func NewRouter(controller *controller.Controller) *Router {
 	router.controller = controller
 
 	router.ProductRoutes()
+	router.DocsRoutes()
 
 	return &router
 }

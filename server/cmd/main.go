@@ -12,6 +12,16 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// @title       Sol-Shop Server
+// @version     1.0
+// @description Server built with Go for Sol-Shop application.
+
+// @license.name MIT
+
+// @host     localhost:8080
+// @BasePath /
+// @schemes  http
+
 func main() {
 	c := config.NewConfig()
 	logger.InitLogger(&c.Logger)

@@ -1,0 +1,341 @@
+basePath: /
+definitions:
+  body.Error:
+    properties:
+      error:
+        type: string
+    type: object
+  body.ProductBody:
+    properties:
+      categories:
+        items:
+          type: integer
+        type: array
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      price:
+        minimum: 1000
+        type: integer
+      stock:
+        minimum: 0
+        type: integer
+    required:
+    - description
+    - name
+    - price
+    - stock
+    type: object
+  body.ProductCategoryBody:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - description
+    - name
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: Server built with Go for Sol-Shop application.
+  license:
+    name: MIT
+  title: Sol-Shop Server
+  version: "1.0"
+paths:
+  /products:
+    post:
+      consumes:
+      - application/json
+      description: Create Product.
+      operationId: Create-Product
+      parameters:
+      - description: New Product Data
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/body.ProductBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/body.ProductBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Create Product.
+      tags:
+      - products
+  /products/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Product
+      operationId: Delete-Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/body.ProductBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Delete Product
+      tags:
+      - products
+    get:
+      consumes:
+      - application/json
+      description: Get Product
+      operationId: Get-Product
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/body.ProductBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Get Product
+      tags:
+      - products
+    put:
+      consumes:
+      - application/json
+      description: Update Product
+      operationId: Update-Product
+      parameters:
+      - description: New Product Data
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/body.ProductBody'
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/body.ProductBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Update Product
+      tags:
+      - products
+  /products/category:
+    post:
+      consumes:
+      - application/json
+      description: Create Product Category
+      operationId: Create-Product-Category
+      parameters:
+      - description: New Category Data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/body.ProductCategoryBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/body.ProductCategoryBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Create Product Category
+      tags:
+      - product-categories
+  /products/category/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Product Category
+      operationId: Delete-Product-Category
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Delete Product Category
+      tags:
+      - product-categories
+    get:
+      consumes:
+      - application/json
+      description: Get Product Category
+      operationId: Get-Product-Category
+      parameters:
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/body.ProductCategoryBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Get Product Category
+      tags:
+      - product-categories
+    put:
+      consumes:
+      - application/json
+      description: Update Product Category
+      operationId: Update-Product-Category
+      parameters:
+      - description: New Category Data
+        in: body
+        name: category
+        required: true
+        schema:
+          $ref: '#/definitions/body.ProductCategoryBody'
+      - description: Category ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/body.ProductCategoryBody'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: Update Product Category
+      tags:
+      - product-categories
+  /products/category/list:
+    get:
+      consumes:
+      - application/json
+      description: List Product Categories
+      operationId: List-Product-Categories
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/body.ProductCategoryBody'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: List Product Categories
+      tags:
+      - product-categories
+  /products/list:
+    get:
+      consumes:
+      - application/json
+      description: List Products
+      operationId: List-Products
+      parameters:
+      - description: Limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      - description: category
+        in: query
+        name: category
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/body.ProductBody'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/body.Error'
+      summary: List Products
+      tags:
+      - products
+schemes:
+- http
+swagger: "2.0"

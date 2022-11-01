@@ -9,6 +9,18 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+// @Summary     List Products
+// @Description List Products
+// @ID          List-Products
+// @Tags        products
+// @Accept      json
+// @Produce     json
+// @Param       limit    query    int false "Limit"
+// @Param       offset   query    int false "offset"
+// @Param       category query    int false "category"
+// @Success     200      {object} []body.ProductBody
+// @Failure     500      {object} body.Error
+// @Router      /products/list [get]
 func (pc *ProductController) ListProducts(c echo.Context) error {
 	var err error
 	var res ent.Products
@@ -24,7 +36,7 @@ func (pc *ProductController) ListProducts(c echo.Context) error {
 	}
 
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, body.NewErrorMessage(err.Error()))
+		return c.JSON(http.StatusInternalServerError, body.NewError(err.Error()))
 	}
 
 	payload := body.MapMultipleProductBodies(res)

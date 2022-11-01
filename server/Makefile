@@ -4,6 +4,8 @@ gen-ent:
 	go generate ./ent
 create-db:
 	docker exec -it sol-shop-pg createdb --username=root --owner=root -e sol-shop
+swag: 
+	swag init -d=cmd,./
 
 .PHONY:
 	init-schema go-ent

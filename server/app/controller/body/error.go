@@ -1,9 +1,9 @@
 package body
 
-type ErrorMessage struct {
+type Error struct {
 	Message string `json:"error"`
 }
 
-func NewErrorMessage(s string) *ErrorMessage {
-	return &ErrorMessage{Message: s}
+func NewError(s string) *Error {
+	return &Error{Message: s}
 }

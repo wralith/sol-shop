@@ -25,6 +25,24 @@ func (p *ProductCategoryBody) BindAndValidate(c echo.Context) error {
 	return nil
 }
 
+func MapToProductCategoryBody(e *ent.ProductCategory) *ProductCategoryBody {
+	return &ProductCategoryBody{
+		ID:          e.ID,
+		Name:        e.Name,
+		Description: e.Description,
+	}
+}
+
+func MapToProductCategoryBodies(e []*ent.ProductCategory) []*ProductCategoryBody {
+	var bodies []*ProductCategoryBody
+
+	for i := 0; i < len(e); i++ {
+		bodies = append(bodies, MapToProductCategoryBody(e[i]))
+	}
+
+	return bodies
+}
+
 func (p *ProductCategoryBody) MapToEnt() *ent.ProductCategory {
 	return &ent.ProductCategory{
 		ID:          p.ID,
