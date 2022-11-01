@@ -11,7 +11,8 @@ import (
 func (pc *ProductController) UpdateProduct(c echo.Context) error {
 	id := util.ParamInt(c, "id")
 	product := body.ProductBody{}
-	if err := c.Bind(&product); err != nil {
+
+	if err := product.BindAndValidate(c); err != nil {
 		return c.JSON(http.StatusInternalServerError, body.NewErrorMessage(err.Error()))
 	}
 

@@ -1,13 +1,17 @@
 package body
 
-import "sol-shop-server/ent"
+import (
+	"sol-shop-server/ent"
+
+	"github.com/labstack/echo/v4"
+)
 
 type ProductBody struct {
 	ID          int    `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Price       int    `json:"price"`
-	Stock       int    `json:"stock"`
+	Name        string `json:"name" validate:"required"`
+	Description string `json:"description" validate:"required"`
+	Price       int    `json:"price" validate:"required,min=1000"`
+	Stock       int    `json:"stock" validate:"required,min=0"`
 	Categories  []int  `json:"categories"`
 }
 
@@ -46,4 +50,16 @@ func (b *ProductBody) MapToEntWithoutCategories() *ent.Product {
 		Price:       b.Price,
 		Stock:       b.Stock,
 	}
+}
+
+func (b *ProductBody) BindAndValidate(c echo.Context) error {
+	if err := c.Bind(b); err != nil {
+		return err
+	}
+
+	if err := c.Validate(b); err != nil {
+		return err
+	}
+
+	return nil
 }
