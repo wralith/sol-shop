@@ -1,13 +1,13 @@
 package main
 
 import (
-	"context"
-	"fmt"
+	"sol-shop-server/app/controller"
+	"sol-shop-server/app/repository"
+	"sol-shop-server/app/router"
+	"sol-shop-server/app/service"
 	"sol-shop-server/config"
-	"sol-shop-server/ent"
-	"sol-shop-server/ent/product"
+	"sol-shop-server/pkg/db/postgres"
 	"sol-shop-server/pkg/logger"
-	"sol-shop-server/pkg/postgres"
 
 	"github.com/rs/zerolog/log"
 )
@@ -27,12 +27,11 @@ func main() {
 
 	}
 
-	ctx := context.Background()
+	repo := repository.NewRepository(client)
+	service := service.NewService(repo)
+	controller := controller.NewController(service)
+	router := router.NewRouter(controller)
 
-	queryShoes, err := client.ProductCategory.Query().QueryProducts().Order(ent.Desc(product.FieldID)).All(ctx)
-	if err != nil {
-		fmt.Println("error while querying shoes category")
-	}
-
-	fmt.Println(queryShoes)
+	router.Echo.Start(":" + c.Server.Port)
+	// shoe, _ := service.ProductService.GetProductByID(2)
 }
