@@ -5,7 +5,8 @@ package user;
 option go_package = "github.com/wralith/sol-shop/pb/gen/user";
 
 service UserService {
-  rpc Login (LoginRequest) returns (LoginResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse);
 }
 
 message User {
@@ -22,3 +23,11 @@ message LoginRequest {
 message LoginResponse {
   User user = 1;
 }
+
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message RegisterResponse {}

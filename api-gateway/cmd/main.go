@@ -23,6 +23,7 @@ func main() {
 	}
 
 	app.Post("/login", user.Login(userGrpcClient))
+	app.Post("/register", user.Register(userGrpcClient))
 
 	app.Listen(":" + config.Http.Port)
 }

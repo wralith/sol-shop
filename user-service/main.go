@@ -19,12 +19,6 @@ func main() {
 	repo := repo.New(db)
 	db.AutoMigrate(&model.User{})
 
-	user := model.User{Username: "wra", Email: "wra@wra.com", Password: "1234"}
-	err = repo.Create(user)
-	if err != nil {
-		log.Println(err)
-	}
-
 	server := grpc.NewGRPCController(repo)
 	server.Run("8081")
 }
